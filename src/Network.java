@@ -1,3 +1,8 @@
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Scanner;
+
 class Network {
     public static void main(String[] args) throws IOException, InterruptedException {
         System.out.println("What is the number of WI-FI Connections?");
@@ -26,19 +31,6 @@ class Network {
             devices.get(i).join();
         }
         file.close();
-        /ArrayList<Integer> x =new ArrayList<>();
-        x.add(1);
-        x.add(2);
-        x.add(3);
-        for (int i = 0; i<x.size(); i++){
-            if(i == 1){
-                x.remove(i);
-                x.add(i, 5);
-            }
-        }
-        for (int i = 0; i<x.size(); i++){
-            System.out.println(x.get(i));
-        }
-    }/
-}
+
+    }
 }

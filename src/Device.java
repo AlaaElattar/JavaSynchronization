@@ -30,20 +30,30 @@ class Device extends Thread {
     }
 
     private void connect(Router router){
-        s.acquire(this);
-        router.addDevice(this);
+        try {
+            s.acquire(this,file);
+            router.addDevice(this,file);
+        }catch (IOException e){
+            e.printStackTrace ();
+        }
+
     }
 
     private void disconnect(Router router){
-        router.removeDevice(this);
-        s.release(this);
+        try{
+            router.removeDevice(this,file);
+            s.release(this);
+        } catch (IOException e) {
+            e.printStackTrace ();
+        }
+
     }
 
     @Override
     public void run(){
         this.connect(router);
         try {
-            Thread.sleep(2000);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -67,7 +77,7 @@ class Device extends Thread {
 
 
         try {
-            Thread.sleep(2000);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

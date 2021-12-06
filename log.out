@@ -1,0 +1,20 @@
+C1 (mobile) arrived 
+C4 (pc) arrived 
+C3 (pc) arrived and waiting 
+C2 (tablet) arrived and waiting 
+connection 1: C1 occupied 
+connection 2: C4 occupied 
+connection 1: C1 login 
+connection 1: C1 performing online activity 
+connection 2: C4 login 
+connection 2: C4 performing online activity 
+connection 1: C1 logged out 
+connection 1: C3 occupied 
+connection 2: C4 logged out 
+connection 2: C2 occupied 
+connection 1: C3 login 
+connection 1: C3 performing online activity 
+connection 2: C2 login 
+connection 2: C2 performing online activity 
+connection 1: C3 logged out 
+connection 2: C2 logged out 
