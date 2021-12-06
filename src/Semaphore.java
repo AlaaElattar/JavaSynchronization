@@ -1,3 +1,6 @@
+import java.io.FileWriter;
+import java.io.IOException;
+
 class semaphore {
     protected int value;
 
@@ -5,15 +8,15 @@ class semaphore {
         value = val;
     }
 
-    public synchronized void acquire(Device device) {
+    public synchronized void acquire(Device device, FileWriter f) throws IOException {
         value--;
         if (value < 0)
             try {
-                System.out.println(device.getDeviceName() + " (" + device.getType() + ") arrived and waiting");
+                f.append (device.getDeviceName() + " (" + device.getType() + ") arrived and waiting \n");
                 wait();
             } catch (InterruptedException e) {}
         else
-            System.out.println(device.getDeviceName() + " (" + device.getType() + ") arrived");
+            f.append (device.getDeviceName() + " (" + device.getType() + ") arrived \n");
     }
 
     public synchronized void release(Device device) {

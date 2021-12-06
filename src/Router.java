@@ -1,3 +1,5 @@
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 class Router {
@@ -12,11 +14,11 @@ class Router {
     }
 
 
-    public void performActivity(Device device){
+    public void performActivity(Device device, FileWriter f) throws IOException {
         int i = devices.indexOf(device);
-        System.out.println("connection " + i +": " + device.getDeviceName() + " performing activity");
+        f.append ("connection " + (i+1) +": " + device.getDeviceName() + " performing online activity \n");
     }
-    public void addDevice(Device device){
+    public void addDevice(Device device, FileWriter f) throws IOException{
         int i = 0;
         for (; i<numDevices; i++){
             if(devices.get(i) == null){
@@ -25,13 +27,20 @@ class Router {
                 break;
             }
         }
-        System.out.println("connection " + i +": " + device.getDeviceName() + " occupied");
+        f.append("connection " + (i+1) +": " + device.getDeviceName() + " occupied \n");
     }
 
-    public void removeDevice(Device device){
+    public void logIn(Device device, FileWriter f) throws IOException{
+        int i = devices.indexOf(device);
+        f.append ("connection " + (i+1) +": " + device.getDeviceName() + " login \n");
+
+    }
+
+    public void removeDevice(Device device, FileWriter f)throws IOException{
         int i = devices.indexOf(device);
         devices.remove(device);
         devices.add(i, null);
-        System.out.println("connection " + i +": " + device.getDeviceName() + " logged out");
+        f.append("connection " + (i+1) +": " + device.getDeviceName() + " logged out \n");
+
     }
 }
