@@ -1,10 +1,11 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 
-enum Status{
-    connected, waiting, disconnected
-}
 
 class Device extends Thread {
     private String type;
@@ -12,6 +13,10 @@ class Device extends Thread {
     private semaphore s;
     public static Router router;
     public static FileWriter file;
+    private JFrame frame;
+    private JPanel panel;
+    private boolean isDisconnected;
+    private int color;
 
     public Device(String n, String t, semaphore s, Router r, FileWriter file){
         deviceName = n;
@@ -19,7 +24,12 @@ class Device extends Thread {
         this.s = s;
         router = r;
         this.file = file;
+        deviceFrame(n, t);
+        isDisconnected = false;
+        color = 0;
     }
+
+
 
     public String getDeviceName() {
         return deviceName;
@@ -43,6 +53,7 @@ class Device extends Thread {
         try{
             router.removeDevice(this,file);
             s.release(this);
+            isDisconnected = true;
         } catch (IOException e) {
             e.printStackTrace ();
         }
@@ -52,35 +63,103 @@ class Device extends Thread {
     @Override
     public void run(){
         this.connect(router);
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        try {
-            router.logIn (this,file);
-        } catch (IOException e) {
-            e.printStackTrace ();
-        }
-
-        /**try {
-            //Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }**/
-
-        try {
-            router.performActivity(this,file);
-        } catch (IOException e) {
-            e.printStackTrace ();
-        }
+        this.connectedDeviceGui(this);
 
 
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        while (true){
+            System.out.print("");
+            if (isDisconnected)
+                break;
         }
-        this.disconnect(router);
+    }
+
+    private void deviceFrame(String n, String t){
+        frame = new JFrame(n + " (" + t +")");
+        frame.setPreferredSize(new Dimension(500, 400));
+        frame.setLocation(500, 300);
+        frame.setBackground(Color.LIGHT_GRAY);
+
+        panel = new JPanel();
+        frame.getContentPane();
+
+        JLabel waiting = new JLabel("Waiting for Connection...");
+        waiting.setFont(new Font("Verdana", Font.BOLD, 16));
+        panel.add(waiting);
+        waiting.setBounds(130, 100, 300, 100);
+
+        panel.setLayout(null);
+        frame.add(panel);
+        frame.pack();
+        frame.setVisible(true);
+    }
+
+    public void connectedDeviceGui(Device device){
+        this.panel.removeAll();
+
+        JButton login = new JButton("Log in");
+        login.setBounds(190, 130, 100, 70);
+        login.setFont(new Font("Verdana", Font.BOLD, 18));
+        this.panel.add(login);
+        panel.setBackground(Color.white);
+        login.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    device.router.logIn (device, device.file);
+                    device.logInDeviceGui(device);
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+            }
+        });
+        panel.setLayout(null);
+    }
+
+    private void logInDeviceGui(Device device){
+        panel.removeAll();
+
+        JButton perform = new JButton("Perform Online Activity");
+        perform.setFont(new Font("Verdana", Font.BOLD, 16));
+        perform.setBounds(130, 100, 250, 70);
+        panel.add(perform);
+        panel.setBackground(Color.LIGHT_GRAY);
+        JButton logOut = new JButton("Log out");
+        logOut.setFont(new Font("Verdana", Font.BOLD, 16));
+        logOut.setBounds(180, 180, 130, 70);
+        panel.add(logOut);
+
+        logOut.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+                device.disconnect(router);
+            }
+        });
+
+        perform.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    router.performActivity (device, device.file);
+
+                    Thread.sleep(500);
+                    if(device.color == 1){
+                        device.panel.setBackground(Color.LIGHT_GRAY);
+                        device.color = 0;
+                    }else{
+                        device.panel.setBackground(Color.WHITE);
+                        device.color = 1;
+                    }
+
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                } catch (InterruptedException interruptedException) {
+                    interruptedException.printStackTrace();
+                }
+            }
+        });
+
+
+        panel.setLayout(null);
     }
 }
