@@ -1,5 +1,8 @@
-h (o) arrived 
-connection 1: h occupied 
-connection 1: h login 
-connection 1: h performing online activity 
-connection 1: h logged out 
+r (r) arrived 
+e (e) arrived 
+connection 2: e occupied 
+connection 1: r occupied 
+connection 1: r login 
+connection 2: e login 
+connection 1: r logged out 
+connection 2: e logged out 
