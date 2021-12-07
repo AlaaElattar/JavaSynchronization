@@ -45,8 +45,8 @@ class Network {
     public static void GUI() {
         JFrame frame = new JFrame("Network");
         frame.setSize(900, 900);
-        frame.setLocation(500, 300);
-        frame.setPreferredSize(new Dimension(1100, 900));
+        frame.setLocation(300, 500);
+        frame.setPreferredSize(new Dimension(1000, 500));
         frame.setBackground(Color.white);
 
         JPanel panel = new JPanel();
@@ -160,40 +160,11 @@ class Network {
     }
 
     public static void main(String[] args) throws IOException, InterruptedException {
-        /**System.out.println("What is the number of WI-FI Connections?");
-         Scanner in = new Scanner(System.in);
-         int numCon = in.nextInt();
-         System.out.println("What is the number of devices Clients want to connect?");
-         int numDevices = in.nextInt();
-
-         FileWriter file = new FileWriter("log.out");
-         semaphore s = new semaphore(numCon);
-         Router router = new Router(numCon);
-
-         ArrayList<Thread> devices = new ArrayList<>();
-         for (int i = 0; i < numDevices; i++) {
-         String name = in.next();
-         String type = in.next();
-         Thread t = new Thread(new Device(name, type, s, router, file));
-         devices.add(t);
-         }
-
-         for (int i = 0; i < numDevices; i++) {
-         devices.get(i).start();
-         devices.get(i).setPriority(numDevices - i);
-         }
-         for (int i = 0; i < numDevices; i++) {
-         devices.get(i).join();
-         }
-         file.close();**/
-
         Thread t = new Thread(){
             public void run(){
                 GUI();
             }
         };
         t.start();
-
-
     }
 }

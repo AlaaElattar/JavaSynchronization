@@ -147,7 +147,7 @@ public class Device extends Thread {
                 try {
                     router.performActivity (device, device.file);
 
-                    Thread.sleep(500);
+                    Thread.sleep(300);
                     if(device.color == 1){
                         device.panel.setBackground(Color.LIGHT_GRAY);
                         device.color = 0;
