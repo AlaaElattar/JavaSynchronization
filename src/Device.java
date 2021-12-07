@@ -5,9 +5,10 @@ import java.awt.event.ActionListener;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 
 
-class Device extends Thread {
+public class Device extends Thread {
     private String type;
     private String deviceName;
     private semaphore s;
@@ -25,6 +26,8 @@ class Device extends Thread {
         router = r;
         this.file = file;
         deviceFrame(n, t);
+
+
         isDisconnected = false;
         color = 0;
     }
@@ -52,7 +55,7 @@ class Device extends Thread {
     private void disconnect(Router router){
         try{
             router.removeDevice(this,file);
-            s.release(this);
+            s.release();
             isDisconnected = true;
         } catch (IOException e) {
             e.printStackTrace ();
@@ -63,7 +66,8 @@ class Device extends Thread {
     @Override
     public void run(){
         this.connect(router);
-        this.connectedDeviceGui(this);
+        connectedDeviceGui(this);
+
 
 
         while (true){
@@ -91,15 +95,16 @@ class Device extends Thread {
         frame.add(panel);
         frame.pack();
         frame.setVisible(true);
+
     }
 
     public void connectedDeviceGui(Device device){
-        this.panel.removeAll();
+        panel.removeAll();
 
         JButton login = new JButton("Log in");
         login.setBounds(190, 130, 100, 70);
         login.setFont(new Font("Verdana", Font.BOLD, 18));
-        this.panel.add(login);
+        device.panel.add(login);
         panel.setBackground(Color.white);
         login.addActionListener(new ActionListener() {
             @Override

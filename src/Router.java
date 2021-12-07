@@ -2,7 +2,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
-class Router {
+public class Router {
     ArrayList<Device> devices;
     int numDevices;
     public Router(int num){

@@ -19,7 +19,7 @@ class semaphore {
             f.append (device.getDeviceName() + " (" + device.getType() + ") arrived \n");
     }
 
-    public synchronized void release(Device device) {
+    public synchronized void release() {
         value++;
         if (value <= 0)
             notify();
