@@ -2,10 +2,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
+
 
 
 public class Device extends Thread {
@@ -145,7 +144,7 @@ public class Device extends Thread {
                 try {
                     router.performActivity (device, device.file);
 
-                    Thread.sleep(500);
+                    Thread.sleep(300);
                     if(device.color == 1){
                         device.panel.setBackground(Color.LIGHT_GRAY);
                         device.color = 0;

@@ -1,0 +1,8 @@
+r (r) arrived 
+e (e) arrived 
+connection 2: e occupied 
+connection 1: r occupied 
+connection 1: r login 
+connection 2: e login 
+connection 1: r logged out 
+connection 2: e logged out 

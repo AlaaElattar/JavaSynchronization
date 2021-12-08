@@ -15,11 +15,11 @@ public class Router {
         this.s =s;
     }
 
-
     public void performActivity(Device device, FileWriter f) throws IOException {
         int i = devices.indexOf(device);
         f.append ("connection " + (i+1) +": " + device.getDeviceName() + " performing online activity \n");
     }
+
     public void addDevice(Device device, FileWriter f) throws IOException{
         s.acquire(device, f);
         int i = 0;
