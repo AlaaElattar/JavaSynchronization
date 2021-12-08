@@ -11,18 +11,18 @@ import java.lang.reflect.InvocationTargetException;
 public class Device extends Thread {
     private String type;
     private String deviceName;
-    private semaphore s;
-    public static Router router;
+    //private semaphore s;
+    public Router router;
     public static FileWriter file;
     private JFrame frame;
     private JPanel panel;
     private boolean isDisconnected;
     private int color;
 
-    public Device(String n, String t, semaphore s, Router r, FileWriter file){
+    public Device(String n, String t, Router r, FileWriter file){
         deviceName = n;
         type = t;
-        this.s = s;
+        //this.s = s;
         router = r;
         this.file = file;
         deviceFrame(n, t);
@@ -44,7 +44,6 @@ public class Device extends Thread {
 
     private void connect(Router router){
         try {
-            s.acquire(this,file);
             router.addDevice(this,file);
         }catch (IOException e){
             e.printStackTrace ();
@@ -55,7 +54,6 @@ public class Device extends Thread {
     private void disconnect(Router router){
         try{
             router.removeDevice(this,file);
-            s.release();
             isDisconnected = true;
         } catch (IOException e) {
             e.printStackTrace ();

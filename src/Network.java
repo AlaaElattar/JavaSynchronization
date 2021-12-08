@@ -17,13 +17,13 @@ class Network {
     public static void createThreads() throws IOException {
         file = new FileWriter("log.out");
         semaphore s = new semaphore(numCon);
-        Router router = new Router(numCon);
+        Router router = new Router(numCon, s);
 
         ArrayList<Thread> devices = new ArrayList<>();
         for (int i = 0; i < names.size(); i++) {
             String name = names.get(i);
             String type = types.get(i);
-            Thread t = new Thread(new Device(name, type, s, router, file));
+            Thread t = new Thread(new Device(name, type, router, file));
             devices.add(t);
         }
 
